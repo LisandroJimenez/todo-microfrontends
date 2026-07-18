@@ -1,0 +1,13 @@
+.app-toolbar {
+  gap: 12px;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+}
+
+.menu-button {
+  color: var(--mat-sys-on-primary);
+}
+
+.app-title {
+  font-weight: 700;
+}

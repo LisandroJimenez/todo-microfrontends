@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-shell {
+  flex: 1;
+}
+
+.app-sidenav {
+  width: 240px;
+  border-right: 1px solid var(--mat-sys-outline-variant);
+}
+
+.active-link {
+  background-color: var(--mat-sys-secondary-container);
+  font-weight: 600;
+}
+
+.active-link mat-icon,
+.active-link [matListItemTitle] {
+  color: var(--mat-sys-on-secondary-container);
+}
+@media (max-width: 768px) {
+  .app-sidenav {
+    width: min(280px, 85vw);
+  }
+}

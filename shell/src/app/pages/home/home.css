@@ -1,0 +1,14 @@
+.home {
+  padding: 24px;
+}
+
+.home-card {
+  max-width: 600px;
+  padding: 24px;
+  gap: 16px;
+}
+
+.home-card h1,
+.home-card p {
+  margin: 0;
+}

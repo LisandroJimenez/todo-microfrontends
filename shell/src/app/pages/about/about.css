@@ -1,0 +1,14 @@
+.about {
+  padding: 24px;
+}
+
+.about-card {
+  max-width: 600px;
+  padding: 24px;
+  gap: 16px;
+}
+
+.about-card h1,
+.about-card p {
+  margin: 0;
+}

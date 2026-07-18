@@ -1,0 +1,20 @@
+<section>
+
+    <mat-card appearance="outlined" class="home-card">
+        <h1>{{ title() }}</h1>
+        <p>Mi primera página creada con Angular.</p>
+    </mat-card>
+
+
+    <button 
+        type="button" 
+        matButton="elevated" 
+        (click)="changeTitle()"
+    > 
+        <mat-icon 
+            fontIcon="edit"
+            aria-hidden="true"
+        ></mat-icon>
+        cambiar titulo
+    </button>
+</section>

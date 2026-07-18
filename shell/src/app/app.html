@@ -1,0 +1,32 @@
+<app-header (menuToggle)="sidenav.toggle()" />
+
+<mat-sidenav-container class="app-shell">
+  <mat-sidenav #sidenav class="app-sidenav"     [mode]="isMobile() ? 'over' : 'side'"
+    [opened]="!isMobile()">
+
+    <mat-nav-list aria-label="Navegación principal">
+      <a mat-list-item routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page">
+        <mat-icon matListItemIcon class="material-icons" aria-hidden="true">
+          home
+        </mat-icon>
+  
+        <span matListItemTitle>
+          Inicio
+        </span>
+      </a>
+      <a mat-list-item routerLink="/about" routerLinkActive="active-link" ariaCurrentWhenActive="page">
+        <mat-icon matListItemIcon class="material-icons" aria-hidden="true" >
+          info
+        </mat-icon>
+      
+        <span matListItemTitle>
+          Acerca de
+        </span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>

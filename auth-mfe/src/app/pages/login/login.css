@@ -1,0 +1,89 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.login-page {
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  display: grid;
+  place-items: center;
+
+  padding: 24px;
+  background: var(--mat-sys-surface-container-low);
+}
+
+.login-card {
+  width: min(100%, 420px);
+  padding: 16px;
+}
+
+.login-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.login-icon-container {
+  display: grid;
+  place-items: center;
+
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 12px;
+
+  border-radius: 50%;
+  background: var(--mat-sys-primary-container);
+}
+
+.login-icon {
+  width: 36px;
+  height: 36px;
+
+  font-size: 36px;
+  color: var(--mat-sys-on-primary-container);
+}
+
+.login-header mat-card-title {
+  margin-bottom: 8px;
+  font-size: 28px;
+}
+
+.login-fields {
+  display: grid;
+  gap: 8px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.login-button {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 8px;
+}
+
+.login-progress {
+  min-height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  color: var(--mat-sys-primary);
+  font-size: 14px;
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    padding: 16px;
+  }
+
+  .login-card {
+    padding: 8px;
+  }
+}
