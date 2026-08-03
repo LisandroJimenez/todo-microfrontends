@@ -18,6 +18,7 @@ import { TodosService } from '../../services/todos.service';
 import { CreateTodoRequest } from '../../models/create-todo-request';
 import { UpdateTodoRequest } from '../../models/update-todo-request';
 import { finalize } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
@@ -31,7 +32,8 @@ import { finalize } from 'rxjs';
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule
   ],
   templateUrl: './todos.html',
   styleUrl: './todos.css'

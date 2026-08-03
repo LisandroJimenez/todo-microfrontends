@@ -2,163 +2,246 @@
 
   <header class="todos-header">
     <div>
+      <span class="page-eyebrow">Organizador personal</span>
       <h1>Mis tareas</h1>
       <p>Administra tus tareas pendientes y completadas.</p>
     </div>
+
+    <div class="header-summary">
+      <span>{{ todos().length }}</span>
+      <small>Tareas</small>
+    </div>
   </header>
 
-  <form class="todo-form" [formGroup]="todoForm" (ngSubmit)="saveTodo()">
+  <div class="todos-layout">
+    <aside class="form-panel">
 
-    <h2>
-      @if (editingTodoId()) {
-      Editar tarea
-      } @else {
-      Nueva tarea
-      }
-    </h2>
-    <mat-form-field appearance="outline">
-      <mat-label>Título</mat-label>
+      <div class="form-panel-header">
+        <span class="form-step">
+          {{ editingTodoId() ? 'Editando' : 'Nueva' }}
+        </span>
 
-      <input matInput formControlName="titulo" placeholder="Ejemplo: Estudiar Angular">
-
-      @if (
-      todoForm.controls.titulo.touched &&
-      todoForm.controls.titulo.hasError('required')
-      ) {
-      <mat-error>
-        El título es obligatorio.
-      </mat-error>
-      }
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Descripción</mat-label>
-
-      <textarea matInput formControlName="descripcion" placeholder="Descripción opcional"></textarea>
-    </mat-form-field>
-
-    <div class="form-actions">
-
-      <button mat-flat-button type="submit" [disabled]="creating() || updating()">
-        @if (creating() || updating()) {
-        Guardando...
-        } @else if (editingTodoId()) {
-        Guardar cambios
-        } @else {
-        Crear tarea
-        }
-      </button>
-
-      @if (editingTodoId()) {
-      <button mat-button type="button" (click)="cancelEdit()">
-        Cancelar
-      </button>
-      }
-
-    </div>
-
-  </form>
-
-  @if (loading()) {
-
-  <div class="state-container">
-    <mat-spinner diameter="40"></mat-spinner>
-    <p>Cargando tareas...</p>
-  </div>
-
-  } @else if (error()) {
-
-  <div class="state-container error-state">
-    <p>{{ error() }}</p>
-  </div>
-
-  } @else if (todos().length === 0) {
-
-  <div class="state-container">
-    <h2>No tienes tareas</h2>
-    <p>Cuando crees una tarea aparecerá aquí.</p>
-  </div>
-
-  } @else {
-
-  <div class="todos-summary">
-    <p>
-      Tareas encontradas:
-      <strong>{{ todos().length }}</strong>
-    </p>
-  </div>
-
-  <div class="todos-grid">
-
-    @for (todo of todos(); track todo.id) {
-
-    <mat-card class="todo-card">
-
-      <mat-card-header>
-
-        <mat-card-title>
-          {{ todo.titulo }}
-        </mat-card-title>
-
-        <mat-card-subtitle>
-          @if (todo.completado) {
-          <span class="status completed">
-            Completada
-          </span>
+        <h2>
+          @if (editingTodoId()) {
+            Editar tarea
           } @else {
-          <span class="status pending">
-            Pendiente
-          </span>
+            Crear tarea
           }
-        </mat-card-subtitle>
+        </h2>
 
-      </mat-card-header>
+        <p>
+          @if (editingTodoId()) {
+            Modifica la información de la tarea seleccionada.
+          } @else {
+            Agrega una nueva actividad a tu lista.
+          }
+        </p>
+      </div>
 
-      <mat-card-content>
-        <mat-card-actions align="end">
+      <form
+        class="todo-form"
+        [formGroup]="todoForm"
+        (ngSubmit)="saveTodo()"
+      >
 
-          <button mat-button type="button" (click)="startEdit(todo)">
-            Editar
+        <mat-form-field appearance="outline">
+          <mat-label>Título</mat-label>
+
+          <input
+            matInput
+            formControlName="titulo"
+            placeholder="Ejemplo: Estudiar Angular"
+          >
+
+          @if (
+            todoForm.controls.titulo.touched &&
+            todoForm.controls.titulo.hasError('required')
+          ) {
+            <mat-error>
+              El título es obligatorio.
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Descripción</mat-label>
+
+          <textarea
+            matInput
+            rows="5"
+            formControlName="descripcion"
+            placeholder="Agrega información adicional"
+          ></textarea>
+        </mat-form-field>
+
+        <div class="form-actions">
+
+          <button
+            mat-flat-button
+            type="submit"
+            [disabled]="creating() || updating()"
+          >
+            @if (creating() || updating()) {
+              Guardando...
+            } @else if (editingTodoId()) {
+              Guardar cambios
+            } @else {
+              Crear tarea
+            }
           </button>
-          <button mat-button type="button" (click)="confirmDeleteTodo(todo)">
-            Eliminar
-          </button>
 
-        </mat-card-actions>
-        @if (todo.descripcion) {
-        <p class="todo-description">
-          {{ todo.descripcion }}
-        </p>
-        } @else {
-        <p class="todo-description empty-description">
-          Sin descripción
-        </p>
+          @if (editingTodoId()) {
+            <button
+              mat-button
+              type="button"
+              (click)="cancelEdit()"
+            >
+              Cancelar
+            </button>
+          }
+
+        </div>
+
+      </form>
+
+    </aside>
+
+    <main class="tasks-panel">
+
+      <div class="tasks-panel-header">
+        <div>
+          <h2>Lista de tareas</h2>
+          <p>Revisa y administra tus actividades.</p>
+        </div>
+
+        @if (!loading() && !error() && todos().length > 0) {
+          <span class="task-count">
+            {{ todos().length }}
+            {{ todos().length === 1 ? 'tarea' : 'tareas' }}
+          </span>
         }
+      </div>
 
-        <p class="todo-date">
-          Creada:
-          {{ todo.fechaCreacion | date:'dd/MM/yyyy HH:mm' }}
-        </p>
+      @if (loading()) {
 
-        @if(!todo.completado){
-        <button mat-button type="button" color="accent" (click)="toggleCompleted(todo)">
-          Marcar como completado
-        </button>
-        } @else {
-        <button mat-button type="button" color="accent" (click)="toggleCompleted(todo)">
-          Marcar como pendiente
-        </button>
-        }
+        <div class="state-container">
+          <mat-spinner diameter="40"></mat-spinner>
+          <p>Cargando tareas...</p>
+        </div>
 
+      } @else if (error()) {
 
-      </mat-card-content>
+        <div class="state-container error-state">
+          <h3>No se pudieron cargar las tareas</h3>
+          <p>{{ error() }}</p>
+        </div>
 
-    </mat-card>
+      } @else if (todos().length === 0) {
 
-    }
+        <div class="state-container empty-state">
+          <div class="empty-icon">✓</div>
+          <h2>No tienes tareas</h2>
+          <p>Cuando crees una tarea aparecerá en este espacio.</p>
+        </div>
+
+      } @else {
+
+        <div class="todos-grid">
+
+          @for (todo of todos(); track todo.id) {
+
+            <mat-card
+              class="todo-card"
+              [class.completed-card]="todo.completado"
+            >
+
+              <mat-card-header class="card-header">
+
+                <div class="card-heading">
+
+                  <mat-card-title>
+                    {{ todo.titulo }}
+                  </mat-card-title>
+
+                  <span
+                    class="status"
+                    [class.completed]="todo.completado"
+                    [class.pending]="!todo.completado"
+                  >
+                    {{ todo.completado ? 'Completada' : 'Pendiente' }}
+                  </span>
+
+                </div>
+
+              </mat-card-header>
+
+              <mat-card-content>
+
+                @if (todo.descripcion) {
+                  <p class="todo-description">
+                    {{ todo.descripcion }}
+                  </p>
+                } @else {
+                  <p class="todo-description empty-description">
+                    Sin descripción
+                  </p>
+                }
+
+                <div class="todo-metadata">
+                  <span>Fecha de creación</span>
+
+                  <strong>
+                    {{ todo.fechaCreacion | date:'dd/MM/yyyy HH:mm' }}
+                  </strong>
+                </div>
+
+              </mat-card-content>
+
+              <mat-card-actions class="card-actions">
+
+                <button
+                  mat-button
+                  type="button"
+                  (click)="startEdit(todo)"
+                >
+                  Editar
+                </button>
+
+                <button
+                  mat-button
+                  type="button"
+                  class="delete-button"
+                  (click)="confirmDeleteTodo(todo)"
+                >
+                  Eliminar
+                </button>
+
+                <span class="actions-spacer"></span>
+
+                <button
+                  mat-flat-button
+                  type="button"
+                  class="status-button"
+                  (click)="toggleCompleted(todo)"
+                >
+                  {{ todo.completado
+                    ? 'Marcar pendiente'
+                    : 'Completar'
+                  }}
+                </button>
+
+              </mat-card-actions>
+
+            </mat-card>
+
+          }
+
+        </div>
+
+      }
+
+    </main>
 
   </div>
-
-  }
 
 </section>
