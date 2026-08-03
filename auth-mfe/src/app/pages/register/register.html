@@ -1,0 +1,129 @@
+<section class="register-page">
+  <mat-card class="register-card">
+    <mat-card-header>
+      <mat-card-title>Crear cuenta</mat-card-title>
+
+      <mat-card-subtitle>
+        Registra tus datos para comenzar a utilizar ToDoList.
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+
+          <mat-icon matPrefix>person</mat-icon>
+
+          <input matInput type="text" formControlName="nombre" autocomplete="name" />
+
+          @if (
+          registerForm.controls.nombre.touched &&
+          registerForm.controls.nombre.hasError('required')
+          ) {
+          <mat-error>El nombre es obligatorio.</mat-error>
+          }
+
+          @if (
+          registerForm.controls.nombre.touched &&
+          registerForm.controls.nombre.hasError('minlength')
+          ) {
+          <mat-error>
+            El nombre debe tener al menos 3 caracteres.
+          </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+
+          <mat-icon matPrefix>email</mat-icon>
+
+          <input matInput type="email" formControlName="correo" autocomplete="email" />
+
+          @if (
+          registerForm.controls.correo.touched &&
+          registerForm.controls.correo.hasError('required')
+          ) {
+          <mat-error>El correo es obligatorio.</mat-error>
+          }
+
+          @if (
+          registerForm.controls.correo.touched &&
+          registerForm.controls.correo.hasError('email')
+          ) {
+          <mat-error>Ingresa un correo válido.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+
+          <mat-icon matPrefix>lock</mat-icon>
+
+          <input matInput type="password" formControlName="password" autocomplete="new-password" />
+
+          @if (
+          registerForm.controls.password.touched &&
+          registerForm.controls.password.hasError('required')
+          ) {
+          <mat-error>La contraseña es obligatoria.</mat-error>
+          }
+
+          @if (
+          registerForm.controls.password.touched &&
+          registerForm.controls.password.hasError('minlength')
+          ) {
+          <mat-error>
+            La contraseña debe tener al menos 8 caracteres.
+          </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Confirmar contraseña</mat-label>
+
+          <mat-icon matPrefix>lock_reset</mat-icon>
+
+          <input matInput type="password" formControlName="confirmarPassword" autocomplete="new-password" />
+
+          @if (
+          registerForm.controls.confirmarPassword.touched &&
+          registerForm.controls.confirmarPassword.hasError('required')
+          ) {
+          <mat-error>Confirma tu contraseña.</mat-error>
+          }
+
+          @if (
+          registerForm.controls.confirmarPassword.touched &&
+          registerForm.hasError('passwordsMismatch')
+          ) {
+          <mat-error>Las contraseñas no coinciden.</mat-error>
+          }
+        </mat-form-field>
+
+        <button mat-flat-button type="submit" class="register-button" [disabled]="isLoading()">
+          @if (isLoading()) {
+          <span class="button-content">
+            <mat-spinner diameter="20"></mat-spinner>
+            <span>Creando cuenta...</span>
+          </span>
+          } @else {
+          <span class="button-content">
+            <mat-icon>person_add</mat-icon>
+            <span>Crear cuenta</span>
+          </span>
+          }
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions class="login-link">
+      <span>¿Ya tienes una cuenta?</span>
+
+      <a mat-button routerLink="/login">
+        Iniciar sesión
+      </a>
+    </mat-card-actions>
+  </mat-card>
+</section>

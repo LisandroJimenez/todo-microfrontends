@@ -1,7 +1,7 @@
 import { Component, output, signal, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { Header } from './shared/header/header';
 import { MatListItem, MatListItemIcon, MatListItemTitle, MatNavList } from '@angular/material/list';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
@@ -18,7 +18,7 @@ import { map } from 'rxjs';
 })
 export class App {
   private readonly breakpointObserver = inject(BreakpointObserver);
-
+  private readonly router = inject(Router);
   protected readonly isMobile = toSignal(
     this.breakpointObserver
       .observe('(max-width: 768px)')
@@ -34,6 +34,11 @@ export class App {
     if (this.isMobile()) {
       void sidenav.close();
     }
+  }
+
+  logout(): void{
+    sessionStorage.removeItem('access_token');
+    this.router.navigate(['/login']);
   }
 
 }

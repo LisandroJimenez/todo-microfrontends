@@ -1,0 +1,100 @@
+:host {
+  display: block;
+}
+
+.todos-page {
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.todos-header {
+  margin-bottom: 24px;
+}
+
+.todos-header h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.todos-header p {
+  margin-top: 8px;
+  color: #6b7280;
+}
+
+.todos-summary {
+  margin-bottom: 16px;
+  color: #4b5563;
+}
+
+.todos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.todo-card {
+  height: 100%;
+}
+
+.todo-card mat-card-content {
+  padding-top: 16px;
+}
+
+.todo-description {
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+.empty-description {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.todo-date {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.status {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status.pending {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.status.completed {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.state-container {
+  min-height: 250px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 12px;
+
+  text-align: center;
+}
+
+.state-container h2,
+.state-container p {
+  margin: 0;
+}
+
+.error-state {
+  color: #b91c1c;
+}

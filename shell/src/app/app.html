@@ -23,6 +23,24 @@
           Acerca de
         </span>
       </a>
+      <a mat-list-item routerLink="/todos" routerLinkActive="active-link" ariaCurrentWhenActive="page">
+        <mat-icon matListItemIcon class="material-icons" aria-hidden="true" >
+          task
+        </mat-icon>
+      
+        <span matListItemTitle>
+          Mis Tareas
+        </span>
+      </a>
+      <a mat-list-item routerLink="/login" (click)="logout()" routerLinkActive="active-link" ariaCurrentWhenActive="page">
+        <mat-icon matListItemIcon class="material-icons" aria-hidden="true" >
+          logout
+        </mat-icon>
+      
+        <span matListItemTitle>
+          Cerrar Sesión
+        </span>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
 

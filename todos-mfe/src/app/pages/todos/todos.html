@@ -1,0 +1,164 @@
+<section class="todos-page">
+
+  <header class="todos-header">
+    <div>
+      <h1>Mis tareas</h1>
+      <p>Administra tus tareas pendientes y completadas.</p>
+    </div>
+  </header>
+
+  <form class="todo-form" [formGroup]="todoForm" (ngSubmit)="saveTodo()">
+
+    <h2>
+      @if (editingTodoId()) {
+      Editar tarea
+      } @else {
+      Nueva tarea
+      }
+    </h2>
+    <mat-form-field appearance="outline">
+      <mat-label>Título</mat-label>
+
+      <input matInput formControlName="titulo" placeholder="Ejemplo: Estudiar Angular">
+
+      @if (
+      todoForm.controls.titulo.touched &&
+      todoForm.controls.titulo.hasError('required')
+      ) {
+      <mat-error>
+        El título es obligatorio.
+      </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Descripción</mat-label>
+
+      <textarea matInput formControlName="descripcion" placeholder="Descripción opcional"></textarea>
+    </mat-form-field>
+
+    <div class="form-actions">
+
+      <button mat-flat-button type="submit" [disabled]="creating() || updating()">
+        @if (creating() || updating()) {
+        Guardando...
+        } @else if (editingTodoId()) {
+        Guardar cambios
+        } @else {
+        Crear tarea
+        }
+      </button>
+
+      @if (editingTodoId()) {
+      <button mat-button type="button" (click)="cancelEdit()">
+        Cancelar
+      </button>
+      }
+
+    </div>
+
+  </form>
+
+  @if (loading()) {
+
+  <div class="state-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Cargando tareas...</p>
+  </div>
+
+  } @else if (error()) {
+
+  <div class="state-container error-state">
+    <p>{{ error() }}</p>
+  </div>
+
+  } @else if (todos().length === 0) {
+
+  <div class="state-container">
+    <h2>No tienes tareas</h2>
+    <p>Cuando crees una tarea aparecerá aquí.</p>
+  </div>
+
+  } @else {
+
+  <div class="todos-summary">
+    <p>
+      Tareas encontradas:
+      <strong>{{ todos().length }}</strong>
+    </p>
+  </div>
+
+  <div class="todos-grid">
+
+    @for (todo of todos(); track todo.id) {
+
+    <mat-card class="todo-card">
+
+      <mat-card-header>
+
+        <mat-card-title>
+          {{ todo.titulo }}
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          @if (todo.completado) {
+          <span class="status completed">
+            Completada
+          </span>
+          } @else {
+          <span class="status pending">
+            Pendiente
+          </span>
+          }
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-card-actions align="end">
+
+          <button mat-button type="button" (click)="startEdit(todo)">
+            Editar
+          </button>
+          <button mat-button type="button" (click)="confirmDeleteTodo(todo)">
+            Eliminar
+          </button>
+
+        </mat-card-actions>
+        @if (todo.descripcion) {
+        <p class="todo-description">
+          {{ todo.descripcion }}
+        </p>
+        } @else {
+        <p class="todo-description empty-description">
+          Sin descripción
+        </p>
+        }
+
+        <p class="todo-date">
+          Creada:
+          {{ todo.fechaCreacion | date:'dd/MM/yyyy HH:mm' }}
+        </p>
+
+        @if(!todo.completado){
+        <button mat-button type="button" color="accent" (click)="toggleCompleted(todo)">
+          Marcar como completado
+        </button>
+        } @else {
+        <button mat-button type="button" color="accent" (click)="toggleCompleted(todo)">
+          Marcar como pendiente
+        </button>
+        }
+
+
+      </mat-card-content>
+
+    </mat-card>
+
+    }
+
+  </div>
+
+  }
+
+</section>

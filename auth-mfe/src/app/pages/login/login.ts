@@ -20,9 +20,12 @@ import {
   MatSnackBarModule,
 } from '@angular/material/snack-bar';
 import { AuthService } from '../../services/auth.service';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { LoginRequest } from '../../models/login-request';
+import { LoginResponse } from '../../models/login-response';
 import { finalize } from 'rxjs';
+import { TokenStorageService } from '../../services/token-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -42,8 +45,9 @@ import { finalize } from 'rxjs';
 export class Login {
 
   private readonly authService = inject(AuthService);
-
+  private readonly tokenStorageService = inject(TokenStorageService);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
 
   readonly isLoading = signal(false);
 
@@ -60,7 +64,7 @@ export class Login {
       nonNullable: true,
       validators: [
         Validators.required,
-        Validators.minLength(8),
+        Validators.minLength(6),
       ],
     }),
   });
@@ -94,7 +98,9 @@ export class Login {
         })
       )
       .subscribe({
-        next: () => {
+        next: (response: LoginResponse) => {
+          this.tokenStorageService.saveToken(response.access_token);
+
           this.snackBar.open(
             'Inicio de sesión correcto.',
             'Cerrar',
@@ -102,6 +108,8 @@ export class Login {
               duration: 3000
             }
           );
+
+          this.router.navigate(['/todos']);
         },
         error: (error: HttpErrorResponse) => {
           let mensaje = 'No fue posible iniciar sesión.';

@@ -1,0 +1,4 @@
+{
+  "auth-mfe": "http://localhost:4201/remoteEntry.json",
+  "todos-mfe": "http://localhost:4202/remoteEntry.json"
+}
